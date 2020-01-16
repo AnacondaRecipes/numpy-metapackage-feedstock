@@ -32,6 +32,9 @@ test:
   commands:
     - f2py -h
     - python -c "import numpy; numpy.show_config()"
+    - pytest -v --pyargs numpy -k "not (test_loss_of_precision or test_einsum_sums_cfloat64)"  # [ppc64le]
+    - pytest -v --pyargs numpy -k "not (test_loss_of_precision or test_may_share_memory_easy_fuzz or test_xerbla_override or test_may_share_memory_harder_fuzz or test_large_zip or test_sdot_bug_8577 or test_unary_ufunc_call_fuzz)"  # [aarch64]
+    - pytest -v --pyargs numpy  # [not (aarch64 or ppc64le)]
   imports:
     - numpy
     - numpy.linalg.lapack_lite
